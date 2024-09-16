@@ -45,7 +45,6 @@ DWORD WINAPI ThreadFunc(LPVOID lpParam) {
         return 1;
     }
     double cpuLoadAfter = getCurrentCpuLoad();
-
     {
         std::lock_guard<std::mutex> lock(cpuLoadsMutex);
         cpuLoads.push_back(cpuLoadAfter);
