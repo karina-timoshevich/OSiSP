@@ -5,16 +5,15 @@
 #include <filesystem>
 #include <numeric>
 #include <mutex>
-
+// D:\TEST\text.txt
 std::vector<double> cpuLoads;
 std::mutex cpuLoadsMutex;
 
-//Performance Data Helper, дескриптор запроса производительности и счетчика процессора
 PDH_HQUERY cpuQuery;
 PDH_HCOUNTER cpuTotal;
 
 void initCpuLoadCounter() {
-    PdhOpenQuery(NULL, NULL, &cpuQuery);
+    PdhOpenQuery(NULL, NULL, &cpuQuery); 
     PdhAddEnglishCounter(cpuQuery, "\\Processor(_Total)\\% Processor Time", NULL, &cpuTotal);
     PdhCollectQueryData(cpuQuery);
 }
@@ -91,7 +90,7 @@ int main() {
         partSize.QuadPart = fileSize.QuadPart / threadCount;
         std::vector<HANDLE> threads(threadCount);
         LARGE_INTEGER startTime, endTime, freq;
-        QueryPerformanceFrequency(&freq);
+        QueryPerformanceFrequency(&freq); //частота процессора/счетсик производительности (тики в секунду)
         QueryPerformanceCounter(&startTime);
 
         std::vector<ThreadParams*> paramsList(threadCount);
