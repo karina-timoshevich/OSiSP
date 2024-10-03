@@ -90,6 +90,7 @@ void memory_mapped_file_processing(const char *filename) {
             totalLetterCount[j] += threadData[i].letter_count[j];
         }
     }
+
     double endTime = get_time_in_seconds();
     UnmapViewOfFile(mappedView);
     CloseHandle(hMapping);
@@ -134,10 +135,59 @@ void traditional_file_processing(const char *filename) {
     printf("Running time of the traditional approach: %.2f seconds\n", endTime - startTime);
 }
 
+void multithreaded_traditional_file_processing(const char *filename) {
+    HANDLE hFile;
+    DWORD bytesRead = 0;
+    int totalLetterCount[26] = { 0 };
+    double startTime, endTime;
+
+    hFile = CreateFile(filename,GENERIC_READ,0,NULL,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,NULL);
+
+    if (hFile == INVALID_HANDLE_VALUE) {
+        printf("Error opening file: %d\n", GetLastError());
+        return;
+    }
+
+    DWORD fileSize = GetFileSize(hFile, NULL);
+    DWORD bytesPerThread = fileSize / NUM_THREADS;
+    HANDLE threads[NUM_THREADS];
+    ThreadData threadData[NUM_THREADS];
+
+    startTime = get_time_in_seconds();
+
+    for (int i = 0; i < NUM_THREADS; i++) {
+        char *buffer = new char[bytesPerThread];
+        ReadFile(hFile, buffer, bytesPerThread, &bytesRead, NULL);
+        threadData[i].buffer = buffer;
+        threadData[i].bytesRead = bytesRead;
+        ZeroMemory(threadData[i].letter_count, sizeof(threadData[i].letter_count));
+        threads[i] = CreateThread(NULL, 0, thread_function, &threadData[i], 0, NULL);
+    }
+
+    WaitForMultipleObjects(NUM_THREADS, threads, TRUE, INFINITE);
+
+    for (int i = 0; i < NUM_THREADS; i++) {
+        for (int j = 0; j < 26; j++) {
+            totalLetterCount[j] += threadData[i].letter_count[j];
+        }
+        delete[] threadData[i].buffer;
+    }
+
+    endTime = get_time_in_seconds();
+    CloseHandle(hFile);
+
+    printf("\nMultithreaded traditional approach - Statistics of occurrences of English letters:\n");
+    for (int i = 0; i < 26; i++) {
+        printf("%c: %d\n", 'A' + i, totalLetterCount[i]);
+    }
+    printf("Running time of the multithreaded traditional approach: %.2f seconds\n", endTime - startTime);
+}
+
 int main() {
     const char *filename = "D:\\TEST\\text.txt";
     traditional_file_processing(filename);
     memory_mapped_file_processing(filename);
+    multithreaded_traditional_file_processing(filename);
     return 0;
 }
 
