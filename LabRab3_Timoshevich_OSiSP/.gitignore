@@ -38,3 +38,7 @@ CMakeCache.txt
 build/
 *.ninja
 *.log
+
+# Игнорировать CLion и IDE файлы
+.idea/
+*.iml
