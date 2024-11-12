@@ -3,5 +3,8 @@ project(LabRab5_Timoshevich_OSiSP)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(LabRab5_Timoshevich_OSiSP main.cpp
-        server.cpp)
+add_executable(server server.cpp)
+target_link_libraries(server PRIVATE  ws2_32)
+
+add_executable(client client.cpp)
+target_link_libraries(client PRIVATE ws2_32)
