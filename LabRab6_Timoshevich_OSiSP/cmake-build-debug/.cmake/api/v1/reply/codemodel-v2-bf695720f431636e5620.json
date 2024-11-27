@@ -1,0 +1,60 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.28"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "LabRab6_Timoshevich_OSiSP",
+					"targetIndexes" : 
+					[
+						0
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "LabRab6_Timoshevich_OSiSP::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-LabRab6_Timoshevich_OSiSP-Debug-3430b581f49af16a1bf5.json",
+					"name" : "LabRab6_Timoshevich_OSiSP",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "D:/5 SEM/OSiSP/LabRab6_Timoshevich_OSiSP/cmake-build-debug",
+		"source" : "D:/5 SEM/OSiSP/LabRab6_Timoshevich_OSiSP"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

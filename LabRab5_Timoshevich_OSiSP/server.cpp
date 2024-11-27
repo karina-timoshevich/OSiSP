@@ -22,7 +22,6 @@ void send_to_client(const std::string& message, const std::string& receiver_name
             break;
         }
     }
-
     if (!found) {
         message_queue[receiver_name].push(message);
     }
@@ -52,7 +51,6 @@ void handle_client(SOCKET client_socket) {
             break;
         }
         buffer[recv_size] = '\0';
-
         std::stringstream ss(buffer);
         std::string sender, receiver, message;
         std::getline(ss, sender, '|');
@@ -68,7 +66,7 @@ int main() {
     WSAStartup(MAKEWORD(2, 2), &wsaData);
     SOCKET server_socket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     sockaddr_in server_addr;
-    server_addr.sin_family = AF_INET;
+    server_addr.sin_family = AF_INET; //адреса
     server_addr.sin_addr.s_addr = INADDR_ANY;
     server_addr.sin_port = htons(PORT);
     bind(server_socket, (sockaddr*)&server_addr, sizeof(server_addr));
